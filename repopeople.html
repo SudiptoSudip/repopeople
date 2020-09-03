@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Users Information</title>
+</head>
+<body>
+    
+    <button id="showInfo">Load GitHub User</button>
+    <h1>Github Users</h1>
+    <div id="showme"></div>
+    <script>
+        document.getElementById("showInfo").addEventListener('click', onProcess);
+
+        function onProcess(){
+            var req = new XMLHttpRequest();
+            req.open('GET', 'https://api.github.com/users', true);
+            req.onload = function() {
+                if(req.status==200){
+                var people = JSON.parse(req.responseText)
+                var output= ' ';
+                    for(var i in people){
+                        output +=
+                        '<div class="people" >' + 
+                        '<img src="'+people[i].avatar_url+
+                        ' width="150px" height="150px" >' +
+                        '<dt>' +
+                         '<ol>ID: '+people[i].id+'</ol>' +
+                        '<ol>Login: '+people[i].login+'</ol>' +
+                        '<ol>Repos:'+people[i].repos_url +'</ol>'
+                        '</dt>' +
+                        '</div>';
+                    }
+ document.getElementById('showme').innerHTML = output;
+                    console.log("ok");
+                }
+        
+                  
+                
+            } 
+            req.send();
+        }
+    </script>
+</body>
+</html>
